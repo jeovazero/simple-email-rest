@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-var Message = require('./messageSchema.js');
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const argon2 = require('argon2')
+const Message = require('./messageSchema.js')
 
 const UsersSchema = new Schema({
     name: {
@@ -27,8 +27,11 @@ const UsersSchema = new Schema({
 	}
 });
 
-UsersSchema.methods.verifyPasswd = function(passwd, cb){
-    return this.password == passwd
+UsersSchema.methods.verifyPasswd = function(passwd){
+	return argon2.hash(passwd)
+	.then( hash => {
+		return hash == this.password
+	})
 }
 
 module.exports = mongoose.model('User', UsersSchema);

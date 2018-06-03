@@ -1,6 +1,6 @@
 const restify = require('restify')
 const server = restify.createServer()
-require('./routes/user')(server);
+require('./routes/email')(server);
 
 PORT = process.env.PORT
 
@@ -9,7 +9,7 @@ server.use(restify.plugins.queryParser())
 server.use(restify.plugins.bodyParser())
 
 server.use(function(req, res, next){
-    // Middleware aquii
+    req.authenticated = true;
     next()
 })
 
