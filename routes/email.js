@@ -3,6 +3,8 @@ const User = require('../models/user')
 const argon2 = require('argon2')
 
 const MONGO_URL = process.env.MONGO_URL
+const jwt = require('jsonwebtoken');
+
 const SECRET = process.env.SECRET
 
 mongoose.connect(MONGO_URL)
@@ -52,7 +54,12 @@ module.exports = function(server){
                 res.send({
                     success: true,
                     code: 200,
-                    message: "Logado, \o/"
+                    message: "Logado, \o/",
+                    token: jwt.sign(
+                                { user: user.email },
+                                new Buffer.from(SECRET),
+                                {expiresIn: 120}
+                            )
                 })
             }else{
                 res.send({
@@ -74,7 +81,7 @@ module.exports = function(server){
     })
 
     server.get("/email/inbox", function(req, res, next){
-        if(req.authenticated == false){
+        if(req.user == null){
             res.send({
                 success: false,
                 code: 492,
@@ -87,7 +94,7 @@ module.exports = function(server){
     })
 
     server.get("/email/outbox", function(req, res, next){
-        if(req.authenticated == false){
+        if(req.user == null){
             res.send({
                 success: false,
                 code: 492,
@@ -100,7 +107,7 @@ module.exports = function(server){
     })
 
     server.put("/email/send", function(req, res, next){
-        if(req.authenticated == false){
+        if(req.user == null){
             res.send({
                 success: false,
                 code: 492,
