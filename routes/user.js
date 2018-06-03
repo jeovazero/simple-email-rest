@@ -7,8 +7,7 @@ const SECRET = process.env.SECRET
 mongoose.connect(MONGO_URL)
 
 module.exports = function(server){
-    server.post("/register", function(req, res, next){
-        
+    server.post("/register", function(req, res, next){  
         let name = req.body.name,
             password = req.body.password,
             email = req.body.email
@@ -23,11 +22,12 @@ module.exports = function(server){
                 message: "Usuario registrado"
             })
         })
-        .catch(() => {
+        .catch(e => {
+            console.log(e);
             // Mensagem provisoria
             res.send({
                 success: false,
-                code: 499,
+                code: 490,
                 message: "Usuario ja registrado"
             })
         })
@@ -35,7 +35,33 @@ module.exports = function(server){
     })
     
     server.post("/login", function(req, res, next){
-        res.send('login')
+        let email = req.body.email,
+            password = req.body.password
+
+        User.findOne({email: email})
+        .then( user => {
+            if( user && user.verifyPasswd(password) ){
+                res.send({
+                    success: true,
+                    code: 200,
+                    message: "Logado, \o/"
+                })
+            }else{
+                res.send({
+                    success: false,
+                    code: 491,
+                    message: "Usuario e/ou senha errados"
+                })
+            }
+        })
+        .catch( e => {
+            console.log(e);
+            res.send({
+                success: false,
+                code: 590,
+                message: "Erro no Database, talvez"
+            })
+        })
         return next()
     })
 };

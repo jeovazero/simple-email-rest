@@ -19,5 +19,5 @@ server.get("/", function(req, res, next){
 })
 
 server.listen(PORT, function(){
-    console.log("Pode tiu aqui noiz faiz servidor")
+    console.log("Pode cunfiar tiu aqui noiz faiz servidor")
 })

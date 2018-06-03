@@ -27,8 +27,8 @@ const UsersSchema = new Schema({
 	}
 });
 
-UsersSchema.methods.verifyPasswd = function(cb){
-    return true;
+UsersSchema.methods.verifyPasswd = function(passwd, cb){
+    return this.password == passwd
 }
 
 module.exports = mongoose.model('User', UsersSchema);
