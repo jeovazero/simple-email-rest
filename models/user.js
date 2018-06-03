@@ -8,17 +8,23 @@ const UsersSchema = new Schema({
 		type: String,
 		require: true,
 	},
+	password: {
+        type: String,
+        require: true,
+    },
     email: { 
 		type: String,
 		unique: true,
 		require: true,
 	},
-    password: {
-        type: String,
-        require: true,
-    },
-	inbox : [Message],
-	outbox : [Message]
+	inbox : { 
+		type: [Message],
+		default: []
+	},
+	outbox : { 
+		type: [Message],
+		default: []
+	}
 });
 
 UsersSchema.methods.verifyPasswd = function(cb){

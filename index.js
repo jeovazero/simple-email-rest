@@ -1,5 +1,6 @@
-var restify = require('restify')
-var server = restify.createServer()
+const restify = require('restify')
+const server = restify.createServer()
+require('./routes/user')(server);
 
 PORT = process.env.PORT
 
@@ -13,13 +14,7 @@ server.use(function(req, res, next){
 })
 
 server.get("/", function(req, res, next){
-    res.send("Wow! \\o/");
-    return next()
-})
-
-
-server.get("/hello/:pow", function(req, res, next){
-    res.send("Hey pow: " + req.params.pow)
+    res.send("Wow! \o/")
     return next()
 })
 
