@@ -1,0 +1,37 @@
+{
+  "name": "rest-sd",
+  "version": "1.0.0",
+  "description": "api rest",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node -r dotenv/config index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeovazero/simple-email-rest.git"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "js",
+    "mongoose",
+    "mongodb",
+    "jest",
+    "jwt",
+    "argon2"
+  ],
+  "author": "jeovazero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeovazero/simple-email-rest/issues"
+  },
+  "homepage": "https://github.com/jeovazero/simple-email-rest#readme",
+  "devDependencies": {
+    "dotenv": "^6.0.0"
+  },
+  "dependencies": {
+    "restify": "^7.2.0"
+  }
+}
